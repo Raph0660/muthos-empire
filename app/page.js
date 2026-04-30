@@ -6,6 +6,7 @@ export default async function Page() {
   const { data: products, error } = await supabase
     .from('products')
     .select('*')
+    .order('created_at', { ascending: false }); // Affiche les derniers produits en premier
 
   if (error) return <div className="p-20 text-red-500 font-serif">Erreur de liaison : {error.message}</div>
 
@@ -29,7 +30,7 @@ export default async function Page() {
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           {products?.map((product) => (
-            <div key={product.id} className="group cursor-pointer">
+            <div key={product.id} className="group">
               <article className="relative overflow-hidden bg-white border border-stone-100 p-10 transition-all duration-500 hover:shadow-2xl hover:shadow-stone-200/50">
                 <div className="flex justify-between items-start mb-12">
                   <div>
@@ -46,15 +47,36 @@ export default async function Page() {
                   </div>
                 </div>
 
-                <div className="aspect-video bg-[#f2f0eb] mb-8 flex items-center justify-center group-hover:scale-[1.02] transition-transform duration-700 ease-in-out">
-                   <span className="text-stone-300 font-serif italic">[ Visualisation Système ]</span>
+                {/* IMAGE RÉELLE DU PRODUIT */}
+                <div className="aspect-video bg-[#f2f0eb] mb-8 overflow-hidden flex items-center justify-center">
+                  {product.image_url ? (
+                    <img 
+                      src={product.image_url} 
+                      alt={product.model} 
+                      className="w-full h-full object-contain mix-blend-multiply group-hover:scale-[1.05] transition-transform duration-700 ease-in-out"
+                    />
+                  ) : (
+                    <span className="text-stone-300 font-serif italic text-sm">[ Analyse Visuelle en cours ]</span>
+                  )}
                 </div>
+
+                {/* DESCRIPTION RÉELLE DE L'IA */}
+                <p className="text-sm text-stone-600 leading-relaxed mb-10 font-light min-h-[3rem]">
+                  {product.description || "Analyse technique approfondie en cours par le laboratoire..."}
+                </p>
 
                 <div className="flex items-center justify-between border-t border-stone-100 pt-8">
                   <span className="text-[10px] uppercase tracking-widest opacity-40">Stock Prioritaire</span>
-                  <button className="text-[10px] uppercase tracking-[0.2em] font-bold border-b border-black pb-1 hover:opacity-50 transition-opacity">
+                  
+                  {/* LIEN RÉEL VERS LA BOUTIQUE */}
+                  <a 
+                    href={product.source_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[10px] uppercase tracking-[0.2em] font-bold border-b border-black pb-1 hover:opacity-50 transition-opacity"
+                  >
                     Acquérir l'équipement →
-                  </button>
+                  </a>
                 </div>
               </article>
             </div>
