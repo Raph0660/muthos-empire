@@ -27,22 +27,21 @@ export default async function ArticlePage({ params }) {
   const article = articles.find(a => a.slug === slug);
 
   // Sécurité : Si l'article n'existe pas, on arrête tout ici
-  if (!article) return <div className="p-20 text-center font-serif text-stone-400">Édition introuvable...</div>;
+  if (!article) return <div className="p-20 text-center font-serif text-stone-400">Analyse introuvable...</div>;
 
   // Génération du JSON-LD pour Google
   const jsonLd = {
     "@context": "https://schema.org/",
-    "@type": "Recipe",
+    "@type": "Article",
     "name": article.theme,
-    "author": { "@type": "Organization", "name": "La Rédaction de Tif" },
+    "author": { "@type": "Organization", "name": "Muthos Labs" },
     "datePublished": new Date().toISOString(),
-    "description": `Découvrez notre recette exclusive de ${article.theme} pour un succès garanti en cuisine.`,
-    "prepTime": `PT${article.readTime}M`,
-    "recipeCategory": "Gastronomie",
+    "description": `Découvrez notre analyse technique exclusive de ${article.theme}.`,
+    "articleBody": article.text,
     "publisher": {
       "@type": "Organization",
-      "name": "Tif & ses Gourmandises",
-      "logo": { "@type": "ImageObject", "url": "https://www.tifetsesgourmandises.fr/logo.png" }
+      "name": "Muthos",
+      "logo": { "@type": "ImageObject", "url": "https://www.muthos-empire.com/logo.png" }
     }
   };
 
@@ -56,16 +55,16 @@ export default async function ArticlePage({ params }) {
         <nav className="py-6 px-6 border-b border-stone-200 sticky top-0 bg-[#fdfbf7]/90 backdrop-blur-sm z-50">
           <div className="max-w-4xl mx-auto flex justify-between items-center">
             <Link href="/" className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-stone-500 hover:text-stone-900 transition-colors">
-              <ArrowLeft className="w-3 h-3" /> Retour aux éditions
+              <ArrowLeft className="w-3 h-3" /> Retour aux analyses
             </Link>
-            <span className="font-serif tracking-widest text-sm opacity-80 underline underline-offset-4 decoration-stone-200">TIF & GOURMANDISES</span>
+            <span className="font-serif tracking-widest text-sm opacity-80 underline underline-offset-4 decoration-stone-200">MUTHOS LABS</span>
           </div>
         </nav>
 
         <article className="max-w-3xl mx-auto px-6 mt-16 md:mt-24">
           <header className="mb-16 text-center">
             <div className="flex items-center justify-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#a48437] mb-8">
-              <span>Gastronomie</span>
+              <span>Expertise Technique</span>
               <span className="w-1 h-1 rounded-full bg-stone-300"></span>
               <span className="text-stone-500 font-normal flex items-center gap-1">
                 <Clock className="w-3 h-3"/> {article.readTime} min de lecture
@@ -87,9 +86,9 @@ export default async function ArticlePage({ params }) {
           </div>
 
           <footer className="mt-24 pt-12 border-t border-stone-200 text-center">
-            <p className="font-serif italic text-stone-400 text-lg mb-8">L'élégance du goût, chaque jour.</p>
+            <p className="font-serif italic text-stone-400 text-lg mb-8">L'excellence de l'expertise, chaque jour.</p>
             <Link href="/" className="inline-block px-8 py-3 border border-stone-900 text-[10px] uppercase font-bold tracking-widest hover:bg-stone-900 hover:text-white transition-all">
-              Toutes les éditions
+              Toutes les Analyses
             </Link>
           </footer>
         </article>

@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://www.tifetsesgourmandises.fr/sitemap.xml',
+    sitemap: 'https://www.muthos-empire.com/sitemap.xml',
   }
 }

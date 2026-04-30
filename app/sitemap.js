@@ -13,12 +13,12 @@ async function getArticles() {
 export default async function sitemap() {
   const slugs = await getArticles();
   const articles = slugs.map((slug) => ({
-    url: `https://www.tifetsesgourmandises.fr/article/${slug}`,
+    url: `https://www.muthos-empire.com/article/${slug}`,
     lastModified: new Date(),
   }));
 
   return [
-    { url: 'https://www.tifetsesgourmandises.fr', lastModified: new Date() },
+    { url: 'https://www.muthos-empire.com', lastModified: new Date() },
     ...articles,
   ];
 }

@@ -12,10 +12,10 @@ export default async function Page() {
       {/* HEADER ÉLÉGANT */}
       <header className="pt-20 pb-12 flex flex-col items-center px-6 border-b border-stone-200">
         <span className="text-[10px] uppercase tracking-[0.3em] mb-8 opacity-50 font-medium">
-          L'intelligence de l'autonomie — Édition 2026
+          Le Laboratoire d'expertise des machines de légende
         </span>
         <h1 className="font-serif text-5xl md:text-7xl tracking-tight text-center mb-6">
-          Tif <span className="italic">&</span> ses Machines
+          MUTHOS
         </h1>
         <div className="h-px w-12 bg-black mb-6"></div>
         <p className="max-w-xl text-center text-stone-500 leading-relaxed font-light italic">
@@ -70,7 +70,7 @@ export default async function Page() {
       {/* FOOTER */}
       <footer className="py-20 border-t border-stone-200 text-center">
         <p className="text-[10px] uppercase tracking-[0.5em] opacity-30">
-          Tif & ses Machines © 2026 — Excellence & Autonomie
+          MUTHOS © 2026 — Excellence & Expertise
         </p>
       </footer>
     </main>

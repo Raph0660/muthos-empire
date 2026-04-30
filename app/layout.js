@@ -1,10 +1,10 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Tif & ses Recettes en Cuisine | Le Magazine Culinaire',
-  description: 'Découvrez les meilleures recettes et astuces de Tif pour réussir tous vos plats en cuisine. Passion, gourmandise et partage.',
+  title: 'Muthos | L\'Indice de la Haute Cuisine',
+  description: 'Analyses techniques et sourcing indépendant des machines de cuisine d\'exception.',
   alternates: {
-    canonical: 'https://www.tifetsesgourmandises.fr',
+    canonical: 'https://www.muthos-empire.com',
   },
 }
 
