@@ -1,8 +1,8 @@
 import { createClient } from '@/lib/supabase';
 import Image from 'next/image';
 
-// Revalidation toutes les 6 heures
-export const revalidate = 21600;
+// Revalidation toutes les XXXX
+export const revalidate = 3600
 
 export default async function HomePage() {
   const supabase = createClient();
