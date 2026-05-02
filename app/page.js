@@ -1,136 +1,61 @@
-import { createClient } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 
-// Revalidation toutes les XXXX
-export const revalidate = 3600
+export const revalidate = 3600;
 
 export default async function HomePage() {
-  const supabase = createClient();
-  
-  const { data: products, error } = await supabase
+  const { data: products } = await supabase
     .from('products')
     .select('*')
     .eq('category', 'espresso-premium')
     .gt('price_current', 0)
     .order('last_hunt_at', { ascending: false })
-    .limit(20);
-
-  if (error) {
-    console.error('Erreur Supabase:', error);
-  }
+    .limit(6);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16">
-      {/* Hero Section */}
-      <section className="mb-20 text-center">
-        <h1 className="font-serif text-6xl md:text-7xl mb-6 tracking-tight">
-          L'Ingénierie<br/>
-          de l'Espresso d'Exception
+    <div className="bg-[#fdfbf7]">
+      {/* Hero Section - Futur emplacement du Concierge */}
+      <section className="pt-32 pb-20 px-6 text-center border-b border-stone-200">
+        <span className="text-[10px] uppercase tracking-[0.4em] mb-8 block opacity-50">Expertise Technique & Sourcing</span>
+        <h1 className="font-serif text-6xl md:text-8xl mb-8 tracking-tighter leading-none">
+          L'Ingénierie <br/> de l'Exception
         </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-          Analyses techniques approfondies des machines espresso semi-professionnelles. 
-          Thermodynamique, PID, matériaux : le verdict sans compromis.
+        <p className="text-stone-500 max-w-xl mx-auto font-light italic text-lg leading-relaxed">
+          Décryptage thermodynamique et verdict indépendant sur les systèmes d'extraction de précision.
         </p>
       </section>
 
-      {/* Product Grid */}
-      <section>
-        <h2 className="font-serif text-3xl mb-8 flex items-center gap-3">
-          <span className="text-4xl">⚙️</span>
-          Les Machines Chassées
-        </h2>
+      {/* Product Grid - Le Hunter */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <div className="flex justify-between items-end mb-16">
+          <h2 className="font-serif text-4xl tracking-tight uppercase">Les Dernières Analyses</h2>
+          <a href="/espresso-premium" className="text-[10px] font-bold uppercase tracking-widest border-b border-black pb-1">Voir tout le catalogue</a>
+        </div>
 
-        {!products || products.length === 0 ? (
-          <div className="text-center py-20 text-gray-500">
-            <p className="font-serif text-xl">Le Hunter est en mission...</p>
-            <p className="text-sm mt-2">Premières analyses en cours</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <a
-                key={product.id}
-                href={product.source_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-white border border-gray-200 hover:border-amber-700 
-                         transition-all duration-300 hover:shadow-lg"
-              >
-                {/* Image */}
-                <div className="aspect-square relative bg-gray-50 overflow-hidden">
-                  {product.image_url ? (
-                    <Image
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+          {products?.map((product) => (
+            <article key={product.id} className="group">
+              <a href={product.source_url} target="_blank" className="block">
+                <div className="aspect-[4/5] bg-white border border-stone-100 mb-8 overflow-hidden relative flex items-center justify-center p-12 transition-all duration-700 group-hover:shadow-2xl group-hover:shadow-stone-200">
+                  {product.image_url && (
+                    <img
                       src={product.image_url}
-                      alt={`${product.brand} ${product.model}`}
-                      fill
-                      className="object-contain p-8 group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      alt={product.model}
+                      className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
                     />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-6xl">
-                      ☕
-                    </div>
                   )}
                 </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <p className="text-xs uppercase tracking-wider text-gray-500 mb-2">
-                    {product.brand}
-                  </p>
-                  <h3 className="font-serif text-2xl mb-3 group-hover:text-amber-700 transition-colors">
-                    {product.model}
-                  </h3>
-                  
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                    {product.description}
-                  </p>
-
-                  {product.price_current > 0 && (
-                    <p className="text-2xl font-bold text-amber-700">
-                      {new Intl.NumberFormat('fr-FR', {
-                        style: 'currency',
-                        currency: 'EUR',
-                        minimumFractionDigits: 0,
-                      }).format(product.price_current)}
-                    </p>
-                  )}
-
-                  <p className="text-xs text-gray-500 mt-4 group-hover:text-amber-700 transition-colors">
-                    Voir le produit →
+                <div className="space-y-2">
+                  <p className="text-[10px] uppercase tracking-widest font-bold text-amber-800">{product.brand}</p>
+                  <h3 className="font-serif text-2xl uppercase tracking-tighter">{product.model}</h3>
+                  <p className="text-stone-400 font-light text-sm line-clamp-2 italic mb-4">{product.description}</p>
+                  <p className="font-serif text-xl">
+                    {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(product.price_current)}
                   </p>
                 </div>
               </a>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* CTA Section */}
-      <section className="mt-24 bg-gray-50 border border-gray-200 p-12 text-center">
-        <p className="font-serif text-3xl mb-4">Pourquoi MUTHOS ?</p>
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mt-8">
-          <div>
-            <p className="text-4xl mb-3">🔬</p>
-            <p className="font-semibold mb-2">Analyses Techniques</p>
-            <p className="text-sm text-gray-600">
-              Thermodynamique, PID, profiling de pression : l'ingénierie décryptée
-            </p>
-          </div>
-          <div>
-            <p className="text-4xl mb-3">⚖️</p>
-            <p className="font-semibold mb-2">Verdict Objectif</p>
-            <p className="text-sm text-gray-600">
-              Zéro marketing. Seulement les faits et les mesures qui comptent.
-            </p>
-          </div>
-          <div>
-            <p className="text-4xl mb-3">🎯</p>
-            <p className="font-semibold mb-2">Sélection Premium</p>
-            <p className="text-sm text-gray-600">
-              Uniquement les machines semi-pro qui méritent votre investissement.
-            </p>
-          </div>
+            </article>
+          ))}
         </div>
       </section>
     </div>
