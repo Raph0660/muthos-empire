@@ -1,6 +1,6 @@
-import { supabase } from '@/lib/supabase';
-import { ProductGridTemplate } from '@/lib/templates'; // On pointe vers templates.js
-import configData from '@/data/page-config.json';    // On pointe vers page-config.json
+import { supabase } from '../../lib/supabase';
+import { ProductGridTemplate } from '../../lib/templates';
+import configData from '../../data/page-config.json'; // Vérifie bien s'il y a un 's' à config !
 import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
@@ -9,7 +9,6 @@ export async function generateMetadata({ params }) {
   const slugArray = params.slug || [];
   const slugPath = slugArray.join('/');
   
-  // On cherche la page dans le fichier JSON
   const config = configData.pages.find(p => p.slug.join('/') === slugPath);
   
   if (!config) return { title: "Expertise Technique | MUTHOS" };
