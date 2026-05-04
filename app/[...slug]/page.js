@@ -1,5 +1,5 @@
 import { supabase } from '../../lib/supabase';
-import { ProductGridTemplate, ComparisonTemplate, ArticleTemplate, FAQTemplate } from '../../lib/templates';
+import { ProductGridTemplate, ComparisonTemplate, ArticleTemplate, FAQTemplate, TopListTemplate } from '../../lib/templates';
 import configData from '../../data/page-configs.json';
 import { notFound } from 'next/navigation';
 
@@ -12,16 +12,16 @@ export async function generateMetadata({ params }) {
   if (config) return { title: config.seo.title, description: config.seo.description };
 
   const { data: article } = await supabase.from('articles').select('theme').eq('slug', slugPath).single();
-  if (article) return { title: `${article.theme} | MUTHOS` };
+  if (article) return { title: `${article.theme} | MUTHOS`, description: `Analyse technique Muthos sur ${article.theme}` };
 
-  return { title: "Expertise Technique | MUTHOS" };
+  return { title: "MUTHOS | Expertise Espresso" };
 }
 
 export default async function DynamicPage({ params }) {
   const slugPath = (params.slug || []).join('/');
   const config = configData.pages.find(p => p.slug.join('/') === slugPath);
   
-  // 1. LOGIQUE JSON (Pages configurées)
+  // 1. LOGIQUE PAGES JSON
   if (config) {
     if (config.template === 'product-grid') {
       const { data: products } = await supabase.from('products').select('*')
@@ -36,12 +36,19 @@ export default async function DynamicPage({ params }) {
       return <ComparisonTemplate products={products || []} seo={config.seo} />;
     }
 
+    if (config.template === 'top-list') {
+      const { data: products } = await supabase.from('products').select('*')
+        .eq('category', config.category_filter || 'espresso-premium')
+        .gt('price_current', 0).order('price_current', { ascending: false }).limit(10);
+      return <TopListTemplate products={products || []} seo={config.seo} />;
+    }
+
     if (config.template === 'faq') {
       return <FAQTemplate faqs={config.faqs} seo={config.seo} />;
     }
   }
 
-  // 2. LOGIQUE SUPABASE (Articles longs / Guides)
+  // 2. LOGIQUE ARTICLES SUPABASE
   const { data: article } = await supabase.from('articles').select('*').eq('slug', slugPath).single();
   if (article) {
     return <ArticleTemplate article={article} />;
