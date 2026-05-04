@@ -1,6 +1,6 @@
 import { supabase } from '../../lib/supabase';
 import { ProductGridTemplate, ComparisonTemplate } from '../../lib/templates';
-import configData from '../../data/page-config.json';
+import configData from '../../data/page-configs.json'; // AJOUT DU S ICI
 import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
@@ -20,7 +20,7 @@ export default async function DynamicPage({ params }) {
 
   let data = [];
 
-  // LOGIQUE A : Grille classique
+  // Logique de récupération des données
   if (config.template === 'product-grid') {
     const { data: products } = await supabase
       .from('products')
@@ -32,12 +32,11 @@ export default async function DynamicPage({ params }) {
     return <ProductGridTemplate products={data} seo={config.seo} />;
   }
 
-  // LOGIQUE B : Comparatif (VS)
   if (config.template === 'comparison') {
     const { data: products } = await supabase
       .from('products')
       .select('*')
-      .in('model', config.comparison_models); // On cherche les 2 modèles précis
+      .in('model', config.comparison_models);
     data = products || [];
     return <ComparisonTemplate products={data} seo={config.seo} />;
   }
