@@ -1,6 +1,6 @@
 import { supabase } from '../../lib/supabase';
 import { ProductGridTemplate } from '../../lib/templates';
-import configData from '../../data/page-config.json'; // Vérifie bien s'il y a un 's' à config !
+import configData from '../../data/page-configs.json'; 
 import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
