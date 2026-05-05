@@ -1,55 +1,58 @@
-import { Playfair_Display, Inter } from 'next/font/google';
 import './globals.css';
-
-const playfair = Playfair_Display({ 
-  subsets: ['latin'],
-  variable: '--font-playfair',
-  display: 'swap'
-});
+import { Inter, Playfair_Display } from 'next/font/google';
 
 const inter = Inter({ 
   subsets: ['latin'],
   variable: '--font-inter',
-  display: 'swap'
+});
+
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  variable: '--font-playfair',
 });
 
 export const metadata = {
-  title: 'MUTHOS — L\'Ingénierie de l\'Espresso d\'Exception',
-  description: 'Analyses techniques approfondies des machines espresso semi-professionnelles. Verdict ingénierie sans compromis.',
+  title: 'MUTHOS | L\'Ingénierie de l\'Exception',
+  description: 'Sourcing indépendant et analyses techniques des systèmes d\'extraction espresso de précision. Décryptage thermodynamique des meilleures machines au monde.',
+  keywords: ['espresso', 'machine café grain', 'Lelit', 'Rocket Espresso', 'comparatif machine espresso'],
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fr" className={`${playfair.variable} ${inter.variable}`}>
-      <body className="bg-[#fdfbf7] text-[#1a1a1a] font-sans antialiased">
-        <header className="sticky top-0 z-50 bg-[#fdfbf7]/95 backdrop-blur-sm border-b border-stone-200">
-          <nav className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-            <a href="/" className="font-serif text-3xl tracking-tighter uppercase">
-              MUTHOS
-            </a>
-            <div className="flex gap-10 text-[10px] uppercase font-bold tracking-[0.2em]">
-              <a href="/espresso-premium" className="hover:opacity-50 transition-opacity">
-                Espresso Premium
-              </a>
-              <a href="/le-verdict" className="hover:opacity-50 transition-opacity">
-                Le Verdict
-              </a>
-            </div>
-          </nav>
-        </header>
-
-        <main className="min-h-screen">
+    <html lang="fr" className={`${inter.variable} ${playfair.variable}`}>
+      <body className="font-sans antialiased bg-[#fdfbf7] text-[#1a1a1a]">
+        {/* Tu peux ajouter ici une barre de navigation commune à toutes les pages si besoin */}
+        <main>
           {children}
         </main>
-
-        <footer className="border-t border-stone-200 mt-24 py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6 text-center">
-            <p className="font-serif text-2xl mb-4 tracking-tighter">MUTHOS</p>
-            <p className="text-[10px] uppercase tracking-[0.4em] opacity-40">L'ingénierie des rituels d'exception</p>
-            <p className="mt-12 text-[9px] text-stone-400 max-w-md mx-auto leading-relaxed uppercase tracking-widest">
-              Note : Expertise indépendante. Les liens sortants peuvent être affiliés, 
-              soutenant ainsi nos recherches en laboratoire sans surcoût pour vous.
-            </p>
+        
+        <footer className="bg-[#1a1a1a] text-white py-20 px-6 mt-24">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+            <div className="space-y-4">
+              <span className="font-serif text-3xl tracking-widest uppercase">MUTHOS</span>
+              <p className="text-stone-400 max-w-xs font-light text-sm italic">
+                Laboratoire indépendant d'analyse technique sur les systèmes d'extraction haute performance.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-16">
+              <div className="space-y-4">
+                <p className="text-[10px] uppercase tracking-widest font-bold text-stone-500">Navigation</p>
+                <ul className="space-y-2 text-sm font-light">
+                  <li><a href="/" className="hover:text-stone-400 transition-colors">Home</a></li>
+                  <li><a href="/espresso-premium" className="hover:text-stone-400 transition-colors">Catalogue</a></li>
+                </ul>
+              </div>
+              <div className="space-y-4">
+                <p className="text-[10px] uppercase tracking-widest font-bold text-stone-500">Légal</p>
+                <ul className="space-y-2 text-sm font-light text-stone-400">
+                  <li>© 2026 MUTHOS</li>
+                  <li>Indépendance totale</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </footer>
       </body>
