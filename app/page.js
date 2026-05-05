@@ -16,7 +16,7 @@ export default async function HomePage() {
     <div className="bg-[#fdfbf7]">
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-6 text-center border-b border-stone-200">
-        <span className="text-[10px] uppercase tracking-[0.4em] mb-8 block opacity-50 font-bold">Expertise Technique & Sourcing</span>
+        <span className="text-[10px] uppercase tracking-[0.4em] mb-8 block opacity-50 font-bold text-stone-800">Expertise Technique & Sourcing</span>
         <h1 className="font-serif text-6xl md:text-8xl mb-8 tracking-tighter leading-none text-[#1a1a1a]">
           L'Ingénierie <br/> de l'Exception
         </h1>
@@ -35,32 +35,56 @@ export default async function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
-          {products?.map((product) => (
-            <article key={product.id} className="group">
-              <a href={product.source_url} target="_blank" rel="noopener noreferrer" className="block">
-                <div className="aspect-[4/5] bg-white border border-stone-100 mb-8 overflow-hidden relative flex items-center justify-center p-12 transition-all duration-700 group-hover:shadow-2xl group-hover:shadow-stone-200">
-                  {product.image_url && (
-                    <img
-                      src={product.image_url}
-                      alt={product.model}
-                      className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
-                    />
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <p className="text-[10px] uppercase tracking-widest font-bold text-amber-800">{product.brand}</p>
-                  <h3 className="font-serif text-2xl uppercase tracking-tighter text-[#1a1a1a]">{product.model}</h3>
-                  <p className="text-stone-400 font-light text-sm line-clamp-2 italic mb-4">{product.description}</p>
-                  <p className="font-serif text-xl text-[#1a1a1a]">
-                    {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(product.price_current)}
-                  </p>
-                </div>
-              </a>
-            </article>
-          ))}
+          {products?.map((product) => {
+            // Calcul de la réduction pour l'affichage
+            const hasPromo = product.price_catalog && product.price_catalog > product.price_current;
+            const reduction = hasPromo ? Math.round(((product.price_catalog - product.price_current) / product.price_catalog) * 100) : 0;
+
+            return (
+              <article key={product.id} className="group">
+                <a href={product.source_url} target="_blank" rel="noopener noreferrer" className="block">
+                  <div className="aspect-[4/5] bg-white border border-stone-100 mb-8 overflow-hidden relative flex items-center justify-center p-12 transition-all duration-700 group-hover:shadow-2xl group-hover:shadow-stone-200">
+                    
+                    {/* Badge Promo discrets */}
+                    {hasPromo && (
+                      <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-bold px-2 py-1 uppercase tracking-widest z-10">
+                        -{reduction}%
+                      </div>
+                    )}
+
+                    {product.image_url && (
+                      <img
+                        src={product.image_url}
+                        alt={product.model}
+                        className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
+                      />
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-[10px] uppercase tracking-widest font-bold text-amber-800">{product.brand}</p>
+                    <h3 className="font-serif text-2xl uppercase tracking-tighter text-[#1a1a1a]">{product.model}</h3>
+                    <p className="text-stone-400 font-light text-sm line-clamp-2 italic mb-4">{product.description}</p>
+                    
+                    {/* Zone de Prix Dynamique */}
+                    <div className="flex items-baseline gap-3">
+                      <p className="font-serif text-2xl text-red-600">
+                        {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(product.price_current)}
+                      </p>
+                      
+                      {hasPromo && (
+                        <p className="text-sm text-stone-400 line-through decoration-stone-300">
+                          {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(product.price_catalog)}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </a>
+              </article>
+            );
+          })}
         </div>
         
-        {!products || products.length === 0 && (
+        {(!products || products.length === 0) && (
            <div className="text-center py-20 text-stone-400 font-serif italic">
              Le Hunter est actuellement en mission de sourcing...
            </div>
