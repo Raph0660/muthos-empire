@@ -1,3 +1,4 @@
+import RecommandationExpertPRO from '../components/RecommandationExpertPRO';;
 import { supabase } from '../lib/supabase';
 
 export const revalidate = 3600;
@@ -23,7 +24,11 @@ export default async function HomePage() {
           Décryptage thermodynamique et verdict indépendant sur les systèmes d'extraction de précision.
         </p>
       </section>
+{/* Hero Section ... */}
 
+<RecommandationExpertPRO products={products} />
+
+{/* Product Grid ... */}
       {/* Product Grid */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
