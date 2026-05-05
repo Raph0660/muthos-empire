@@ -1,16 +1,20 @@
-import RecommandationExpertPRO from '../components/RecommandationExpertPRO';;
+import RecommandationExpertPRO from '../components/RecommandationExpertPRO';
 import { supabase } from '../lib/supabase';
 
 export const revalidate = 3600;
 
 export default async function HomePage() {
-  const { data: products } = await supabase
+  // On récupère un plus large pool pour que le Quiz soit pertinent
+  const { data: allProducts } = await supabase
     .from('products')
     .select('*')
     .eq('category', 'espresso-premium')
     .gt('price_current', 0)
     .order('last_hunt_at', { ascending: false })
-    .limit(6);
+    .limit(40); 
+
+  // On ne garde que les 6 premiers pour la grille "Dernières Analyses"
+  const latestProducts = allProducts?.slice(0, 6) || [];
 
   return (
     <div className="bg-[#fdfbf7]">
@@ -24,11 +28,12 @@ export default async function HomePage() {
           Décryptage thermodynamique et verdict indépendant sur les systèmes d'extraction de précision.
         </p>
       </section>
-{/* Hero Section ... */}
 
-<RecommandationExpertPRO products={products} />
+      {/* Module de Recommandation */}
+      <section className="px-6">
+        <RecommandationExpertPRO products={allProducts || []} />
+      </section>
 
-{/* Product Grid ... */}
       {/* Product Grid */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
@@ -39,8 +44,7 @@ export default async function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
-          {products?.map((product) => {
-            // Calcul de la réduction
+          {latestProducts.map((product) => {
             const hasPromo = product.price_catalog && product.price_catalog > product.price_current;
             const reduction = hasPromo ? Math.round(((product.price_catalog - product.price_current) / product.price_catalog) * 100) : 0;
 
@@ -49,7 +53,6 @@ export default async function HomePage() {
                 <a href={product.source_url} target="_blank" rel="noopener noreferrer" className="block">
                   <div className="aspect-[4/5] bg-white border border-stone-100 mb-8 overflow-hidden relative flex items-center justify-center p-12 transition-all duration-700 group-hover:shadow-2xl group-hover:shadow-stone-200">
                     
-                    {/* Badge Promo */}
                     {hasPromo && reduction > 0 && (
                       <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-bold px-2 py-1 uppercase tracking-widest z-10">
                         -{reduction}%
@@ -87,7 +90,7 @@ export default async function HomePage() {
           })}
         </div>
         
-        {(!products || products.length === 0) && (
+        {(!latestProducts || latestProducts.length === 0) && (
            <div className="text-center py-20 text-stone-400 font-serif italic">
              Le Hunter est actuellement en mission de sourcing...
            </div>
