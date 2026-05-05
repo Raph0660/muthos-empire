@@ -35,7 +35,7 @@ export default async function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
           {products?.map((product) => {
-            // Logique de promotion
+            // Calcul de la réduction
             const hasPromo = product.price_catalog && product.price_catalog > product.price_current;
             const reduction = hasPromo ? Math.round(((product.price_catalog - product.price_current) / product.price_catalog) * 100) : 0;
 
@@ -44,8 +44,8 @@ export default async function HomePage() {
                 <a href={product.source_url} target="_blank" rel="noopener noreferrer" className="block">
                   <div className="aspect-[4/5] bg-white border border-stone-100 mb-8 overflow-hidden relative flex items-center justify-center p-12 transition-all duration-700 group-hover:shadow-2xl group-hover:shadow-stone-200">
                     
-                    {/* Badge de réduction si promo */}
-                    {hasPromo && ( reduction > 0) && (
+                    {/* Badge Promo */}
+                    {hasPromo && reduction > 0 && (
                       <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-bold px-2 py-1 uppercase tracking-widest z-10">
                         -{reduction}%
                       </div>
@@ -64,7 +64,6 @@ export default async function HomePage() {
                     <h3 className="font-serif text-2xl uppercase tracking-tighter text-[#1a1a1a]">{product.model}</h3>
                     <p className="text-stone-400 font-light text-sm line-clamp-2 italic mb-4">{product.description}</p>
                     
-                    {/* Affichage des prix */}
                     <div className="flex items-baseline gap-3">
                       <p className="font-serif text-2xl text-red-600">
                         {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(product.price_current)}
