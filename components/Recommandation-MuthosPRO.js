@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 
-export default function RecommandationExpertPRO({ products }) {
+export default function Recommandation-MuthosPRO({ products }) {
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({});
 
