@@ -1,4 +1,4 @@
-import RecommandationExpertPRO from '../components/RecommandationExpertPRO';
+import RecommandationExpertPRO from '../components/Recommandation-MuthosPRO';
 import { supabase } from '../lib/supabase';
 
 export const revalidate = 3600;
