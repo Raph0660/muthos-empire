@@ -1,32 +1,59 @@
 import { supabase } from '../lib/supabase';
-import configData from '../data/page-configs.json'; // VÉRIFIE LE S ICI
 
 export default async function sitemap() {
+  // L'URL de ton site (mise à jour avec muthos-empire.com)
   const baseUrl = 'https://www.muthos-empire.com';
 
-  let articlePages = [];
+  // 1. Récupération dynamique des produits (Les machines)
+  let productRoutes = [];
   try {
-    const { data: articles } = await supabase.from('articles').select('slug');
+    const { data: products } = await supabase
+      .from('products')
+      .select('slug, last_hunt_at')
+      .not('slug', 'is', null);
+
+    if (products) {
+      productRoutes = products.map((product) => ({
+        url: `${baseUrl}/machines/${product.slug}`,
+        lastModified: product.last_hunt_at ? new Date(product.last_hunt_at) : new Date(),
+        changeFrequency: 'daily',
+        priority: 0.9,
+      }));
+    }
+  } catch (e) {
+    console.error("Sitemap: Erreur récupération produits", e);
+  }
+
+  // 2. Récupération dynamique des articles (Le blog/Lexique)
+  let articleRoutes = [];
+  try {
+    const { data: articles } = await supabase
+      .from('articles')
+      .select('slug, created_at')
+      .not('slug', 'is', null);
+
     if (articles) {
-      articlePages = articles.map((article) => ({
+      articleRoutes = articles.map((article) => ({
         url: `${baseUrl}/article/${article.slug}`,
-        lastModified: new Date(),
+        lastModified: article.created_at ? new Date(article.created_at) : new Date(),
         changeFrequency: 'weekly',
         priority: 0.7,
       }));
     }
   } catch (e) {
-    console.error("Sitemap: Erreur Supabase", e);
+    console.error("Sitemap: Erreur récupération articles", e);
   }
 
-  const configPages = (configData.pages || []).map((page) => ({
-    url: `${baseUrl}/${page.slug.join('/')}`,
-    lastModified: new Date(),
-    changeFrequency: 'daily',
-    priority: 0.9,
-  }));
+  // 3. Route statique (La page d'accueil)
+  const staticRoutes = [
+    {
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 1,
+    },
+  ];
 
-  const staticPages = [{ url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1 }];
-
-  return [...staticPages, ...configPages, ...articlePages];
+  // On assemble le tout pour Google
+  return [...staticRoutes, ...productRoutes, ...articleRoutes];
 }
