@@ -1,11 +1,11 @@
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import { Clock, ArrowLeft } from 'lucide-react';
-import { supabase } from '@/lib/supabase'; // On utilise ton client Supabase
+import { supabase } from '@/lib/supabase';
 
 export const revalidate = 3600;
 
-// 1. SEO DYNAMIQUE
+// 1. SEO DYNAMIQUE : Harmonisation avec Idées Casa
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const { data: article } = await supabase
@@ -14,11 +14,11 @@ export async function generateMetadata({ params }) {
     .eq('slug', slug)
     .single();
 
-  if (!article) return { title: "Analyse introuvable | MUTHOS" };
+  if (!article) return { title: "Analyse introuvable | Idées Casa" };
 
   return {
-    title: `${article.theme} | L'Analyse MUTHOS`,
-    description: `Expertise technique et verdict indépendant sur : ${article.theme}.`,
+    title: `${article.theme} | Expertise Idées Casa`,
+    description: `Analyse technique, tests et verdict indépendant de nos experts sur : ${article.theme}.`,
   };
 }
 
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }) {
 export default async function ArticlePage({ params }) {
   const { slug } = await params; 
   
-  // On récupère l'article directement dans Supabase
+  // Récupération de l'article
   const { data: article, error } = await supabase
     .from('articles')
     .select('*')
@@ -35,23 +35,25 @@ export default async function ArticlePage({ params }) {
 
   if (error || !article) {
     return (
-      <div className="min-h-screen flex items-center justify-center font-serif text-stone-400">
-        Analyse en cours de rédaction...
+      <div className="min-h-screen flex items-center justify-center font-serif text-stone-400 italic">
+        Cette expertise est en cours de finalisation par nos rédacteurs...
       </div>
     );
   }
 
+  // Calcul du temps de lecture
   const readTime = Math.max(1, Math.ceil(article.content.split(/\s+/).length / 200));
 
   return (
     <main className="min-h-screen bg-[#fdfbf7] text-[#1c1917] pb-24 border-t-[12px] border-[#1c1917]">
+      {/* Barre de navigation interne */}
       <nav className="py-6 px-6 border-b border-stone-200 sticky top-0 bg-[#fdfbf7]/90 backdrop-blur-sm z-50">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-stone-500 hover:text-stone-900 transition-colors">
-            <ArrowLeft className="w-3 h-3" /> Retour
+            <ArrowLeft className="w-3 h-3" /> Retour Accueil
           </Link>
           <span className="font-serif tracking-widest text-sm opacity-80 underline underline-offset-4 decoration-stone-200 uppercase">
-            MUTHOS Labs
+            Le Lab Idées Casa
           </span>
         </div>
       </nav>
@@ -59,32 +61,28 @@ export default async function ArticlePage({ params }) {
       <article className="max-w-3xl mx-auto px-6 mt-16 md:mt-24">
         <header className="mb-16 text-center">
           <div className="flex items-center justify-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#a48437] mb-8">
-            <span>Expertise Technique</span>
+            <span>Expertise Maison & Cuisine</span>
             <span className="w-1 h-1 rounded-full bg-stone-300"></span>
             <span className="text-stone-500 font-normal flex items-center gap-1">
               <Clock className="w-3 h-3"/> {readTime} min de lecture
             </span>
           </div>
-          <h1 className="font-serif text-4xl md:text-6xl mb-12 leading-tight uppercase tracking-tight text-stone-900">
+          
+          <h1 className="font-serif text-4xl md:text-6xl mb-12 leading-tight uppercase tracking-tight text-stone-900 italic">
             {article.theme}
           </h1>
           <div className="w-24 h-px bg-stone-300 mx-auto"></div>
         </header>
 
+        {/* Contenu de l'article avec style Lettrine et Titres */}
         <div className="font-light leading-relaxed text-[18px] md:text-[20px] text-stone-800 space-y-8 
           [&>p:first-of-type::first-letter]:float-left [&>p:first-of-type::first-letter]:text-7xl 
           [&>p:first-of-type::first-letter]:pr-3 [&>p:first-of-type::first-letter]:font-serif 
           [&>p:first-of-type::first-letter]:text-stone-900
-          [&>h2]:text-3xl [&>h2]:font-serif [&>h2]:mt-16 [&>h2]:text-stone-900 [&>h2]:uppercase">
+          [&>h2]:text-3xl [&>h2]:font-serif [&>h2]:mt-16 [&>h2]:text-stone-900 [&>h2]:uppercase [&>h2]:tracking-tight
+          [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2">
           <ReactMarkdown>{article.content}</ReactMarkdown>
         </div>
 
         <footer className="mt-24 pt-12 border-t border-stone-200 text-center">
-          <Link href="/" className="inline-block px-10 py-4 border border-stone-900 text-[10px] uppercase font-bold tracking-widest hover:bg-stone-900 hover:text-white transition-all">
-            Explorer le catalogue complet
-          </Link>
-        </footer>
-      </article>
-    </main>
-  );
-}
+          <p className="text-stone-400 text-sm mb-8
