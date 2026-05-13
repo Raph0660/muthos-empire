@@ -12,8 +12,8 @@ export default function ProductCard({ product }) {
     <article className="group">
       <a href={`/machines/${product.slug}`} className="block">
         
-        {/* BLOC IMAGE : RESTAURÉ À L'IDENTIQUE DE LA VERSION QUI MARCHAIT */}
-        <div className="aspect-[4/5] bg-white border border-stone-100 mb-8 overflow-hidden relative flex items-center justify-center p-12 transition-all duration-700 group-hover:shadow-2xl group-hover:shadow-stone-200">
+        {/* CONTAINER IMAGE - Version simplifiée au maximum */}
+        <div className="aspect-[4/5] bg-white border border-stone-100 mb-8 relative flex items-center justify-center p-8 transition-all duration-700 group-hover:shadow-2xl">
           
           {hasPromo && reduction > 0 && (
             <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-bold px-2 py-1 uppercase tracking-widest z-10">
@@ -23,28 +23,22 @@ export default function ProductCard({ product }) {
 
           <img
             src={product.image_url || fallbackImage}
-            alt={`Machine à café ${product.brand} ${product.model}`}
-            className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
-            onError={(e) => {
-              e.target.src = fallbackImage;
-              e.target.onerror = null; 
-            }}
+            alt={product.model}
+            className="max-w-full max-h-full object-contain transition-transform duration-700 group-hover:scale-110"
+            onError={(e) => { e.target.src = fallbackImage; }}
           />
         </div>
 
-        {/* BLOC TEXTE : AVEC LES AMÉLIORATIONS VISUELLES VALIDEES */}
-        <div className="space-y-1">
-          {/* Marque : Taille boostée (12px) et font-extrabold */}
+        {/* TEXTE */}
+        <div className="space-y-1 text-left">
           <p className="text-[12px] uppercase tracking-[0.2em] font-extrabold text-amber-800/80">
             {product.brand}
           </p>
           
-          {/* Modèle : Logique "Machine" pour les noms courts (Smeg, etc.) */}
           <h3 className="font-serif text-xl md:text-2xl uppercase tracking-tighter text-[#1a1a1a] leading-tight mb-2">
             {product.model.length < 12 ? `Machine ${product.model}` : product.model}
           </h3>
           
-          {/* Description avec hauteur mini pour l'alignement parfait des cartes */}
           <p className="text-stone-400 font-light text-xs line-clamp-2 italic mb-4 min-h-[32px]">
             {product.description}
           </p>
