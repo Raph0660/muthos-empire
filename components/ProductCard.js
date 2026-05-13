@@ -12,7 +12,7 @@ export default function ProductCard({ product }) {
     <article className="group">
       <a href={`/machines/${product.slug}`} className="block">
         
-        {/* BLOC IMAGE : RESTAURÉ À L'IDENTIQUE DE TA VERSION INITIALE */}
+        {/* BLOC IMAGE : RESTAURÉ À L'IDENTIQUE DE LA VERSION QUI MARCHAIT */}
         <div className="aspect-[4/5] bg-white border border-stone-100 mb-8 overflow-hidden relative flex items-center justify-center p-12 transition-all duration-700 group-hover:shadow-2xl group-hover:shadow-stone-200">
           
           {hasPromo && reduction > 0 && (
@@ -32,17 +32,20 @@ export default function ProductCard({ product }) {
           />
         </div>
 
-        {/* BLOC TEXTE : AJUSTÉ POUR LA MARQUE ET LE MODÈLE UNIQUEMENT */}
+        {/* BLOC TEXTE : AVEC LES AMÉLIORATIONS VISUELLES VALIDEES */}
         <div className="space-y-1">
+          {/* Marque : Taille boostée (12px) et font-extrabold */}
           <p className="text-[12px] uppercase tracking-[0.2em] font-extrabold text-amber-800/80">
             {product.brand}
           </p>
           
+          {/* Modèle : Logique "Machine" pour les noms courts (Smeg, etc.) */}
           <h3 className="font-serif text-xl md:text-2xl uppercase tracking-tighter text-[#1a1a1a] leading-tight mb-2">
             {product.model.length < 12 ? `Machine ${product.model}` : product.model}
           </h3>
           
-          <p className="text-stone-400 font-light text-sm line-clamp-2 italic mb-4 min-h-[32px]">
+          {/* Description avec hauteur mini pour l'alignement parfait des cartes */}
+          <p className="text-stone-400 font-light text-xs line-clamp-2 italic mb-4 min-h-[32px]">
             {product.description}
           </p>
           
