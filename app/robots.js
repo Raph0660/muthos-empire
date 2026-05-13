@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://www.muthos-empire.com/sitemap.xml',
+    sitemap: 'https://www.ideescasa.fr/sitemap.xml',
   }
 }
