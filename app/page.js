@@ -1,6 +1,21 @@
 import { supabase } from '../lib/supabase';
 import ProductCard from '../components/ProductCard';
 
+export const metadata = {
+  title: "IdeesCasa | Curateur d'Excellence pour la Maison & Café de Spécialité",
+  description: "Héritier d'une passion pour l'art de vivre, IdeesCasa sélectionne pour vous le meilleur de l'équipement domestique et des machines espresso premium.",
+  alternates: {
+    canonical: 'https://www.ideescasa.fr',
+  },
+  openGraph: {
+    title: 'IdeesCasa - L’Excellence au Meilleur Prix',
+    description: 'Le comparateur premium pour sublimer votre intérieur.',
+    url: 'https://www.ideescasa.fr',
+    siteName: 'IdeesCasa',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+};
 // ISR : Revalidation toutes les 24h
 export const revalidate = 86400;
 
