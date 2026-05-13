@@ -15,17 +15,18 @@ export default async function HomePage() {
 
   return (
     <div className="bg-[#fdfbf7]">
-      {/* Hero Section orientée Prix & Comparatif */}
+{/* Hero Section orientée Prix & Comparatif */}
       <section className="pt-32 pb-20 px-6 text-center border-b border-stone-200">
         <span className="text-[10px] uppercase tracking-[0.4em] mb-8 block opacity-50 font-bold text-stone-800">
-          Comparateur Indépendant & Bons Plans
+          Le Guide Indépendant IdeesCasa
         </span>
-        <h1 className="font-serif text-6xl md:text-8xl mb-8 tracking-tighter leading-none text-[#1a1a1a]">
-          L'Excellence <br/> au Meilleur Prix
+        <h1 className="font-serif text-5xl md:text-7xl mb-6 tracking-tighter leading-tight text-[#1a1a1a]">
+          L'Équipement Premium <br className="hidden md:block" /> au Meilleur Prix
         </h1>
-        <p className="text-stone-500 max-w-xl mx-auto font-light italic text-lg leading-relaxed">
-          L'Équipement Premium <br/> au cœur de la Maison. L'art de vivre et les technologies d'extraction de précision. Nous scannons quotidiennement le marché pour vous trouver les meilleures machines espresso premium en promotion.
+        <p className="text-stone-500 max-w-2xl mx-auto font-light italic text-lg leading-relaxed">
+          Votre comparateur d'excellence pour la maison. Nous traquons quotidiennement le marché pour vous dénicher les <strong>machines espresso haute performance</strong> aux tarifs les plus avantageux.
         </p>
+      </section>
       </section>
 
       {/* Product Grid (Le Top 12 dynamique) */}
