@@ -1,10 +1,10 @@
 import { supabase } from '../lib/supabase';
 
-// ISR : Revalidation toutes les 24h (86400 secondes) pour économiser les ressources
+// ISR : Revalidation toutes les 24h
 export const revalidate = 86400;
 
 export default async function HomePage() {
-  // On récupère les dernières machines chassées avec une promo ou un prix valide
+  // Récupération des machines
   const { data: latestProducts } = await supabase
     .from('products')
     .select('*')
@@ -15,7 +15,7 @@ export default async function HomePage() {
 
   return (
     <div className="bg-[#fdfbf7]">
-{/* Hero Section orientée Prix & Comparatif */}
+      {/* 1. HERO SECTION */}
       <section className="pt-32 pb-20 px-6 text-center border-b border-stone-200">
         <span className="text-[10px] uppercase tracking-[0.4em] mb-8 block opacity-50 font-bold text-stone-800">
           Le Guide Indépendant IdeesCasa
@@ -27,9 +27,8 @@ export default async function HomePage() {
           Votre comparateur d'excellence pour la maison. Nous traquons quotidiennement le marché pour vous dénicher les <strong>machines espresso haute performance</strong> aux tarifs les plus avantageux.
         </p>
       </section>
-      </section>
 
-      {/* Product Grid (Le Top 12 dynamique) */}
+      {/* 2. PRODUCT GRID SECTION */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
           <h2 className="font-serif text-4xl tracking-tight uppercase text-[#1a1a1a]">Les Meilleures Offres</h2>
@@ -42,7 +41,6 @@ export default async function HomePage() {
 
             return (
               <article key={product.id} className="group">
-                {/* Lien SEO optimisé vers la future page interne */}
                 <a href={`/machines/${product.slug}`} className="block">
                   <div className="aspect-[4/5] bg-white border border-stone-100 mb-8 overflow-hidden relative flex items-center justify-center p-12 transition-all duration-700 group-hover:shadow-2xl group-hover:shadow-stone-200">
                     
@@ -90,17 +88,11 @@ export default async function HomePage() {
              Les offres sont en cours d'actualisation...
            </div>
         )}
-{/* Bloc Confiance / E-E-A-T */}
-<section className="max-w-4xl mx-auto px-6 py-20 border-t border-stone-100 text-center">
-  <h2 className="font-serif text-2xl mb-6 text-[#1a1a1a]">Notre Engagement</h2>
-  <p className="text-stone-500 font-light leading-relaxed italic">
-    "Chez <strong>IdeesCasa</strong>, nous pensons que l'équipement de la maison doit allier durabilité et performance. 
-    Nos analyses de machines espresso ne sont pas de simples fiches techniques : nous agrégeons les retours d'experts et 
-    les données du marché pour vous offrir un comparatif impartial. Notre mission est de rendre le café de spécialité 
-    accessible à tous les passionnés, au prix le plus juste."
-  </p>
-</section>
       </section>
-    </div>
-  );
-}
+
+      {/* 3. BLOC CONFIANCE / E-E-A-T */}
+      <section className="max-w-4xl mx-auto px-6 py-20 border-t border-stone-100 text-center">
+        <h2 className="font-serif text-2xl mb-6 text-[#1a1a1a]">Notre Engagement</h2>
+        <p className="text-stone-500 font-light leading-relaxed italic">
+          "Chez <strong>IdeesCasa</strong>, nous pensons que l'équipement de la maison doit allier durabilité et performance. 
+          Nos analyses de machines espresso ne sont pas de simples fiches techniques : nous agrégeons les retours d'experts
