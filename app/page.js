@@ -48,16 +48,26 @@ export default async function HomePage() {
         )}
       </section>
 
-      {/* 3. BLOC CONFIANCE / E-E-A-T */}
-      <section className="max-w-4xl mx-auto px-6 py-20 border-t border-stone-100 text-center">
-        <h2 className="font-serif text-2xl mb-6 text-[#1a1a1a]">Notre Engagement</h2>
-        <p className="text-stone-500 font-light leading-relaxed italic">
-          "Chez <strong>IdeesCasa</strong>, nous pensons que l'équipement de la maison doit allier durabilité et performance. 
-          Nos analyses de machines espresso ne sont pas de simples fiches techniques : nous agrégeons les retours d'experts et 
-          les données du marché pour vous offrir un comparatif impartial. Notre mission est de rendre le café de spécialité 
-          accessible à tous les passionnés, au prix le plus juste."
-        </p>
-      </section>
+{/* 3. BLOC CONFIANCE / E-E-A-T (Le Pont Sémantique) */}
+<section className="max-w-4xl mx-auto px-6 py-24 border-t border-stone-100">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+    <div className="md:col-span-2">
+      <h2 className="font-serif text-3xl mb-6 text-[#1a1a1a]">L'Art de Vivre, de la Décoration au Rituel</h2>
+      <p className="text-stone-500 font-light leading-relaxed mb-6">
+        Depuis sa création, <strong>IdeesCasa</strong> a pour mission d'accompagner les Français dans l'embellissement de leur foyer. Mais une maison ne se résume pas à son esthétique ; elle se vit à travers ses rituels. 
+      </p>
+      <p className="text-stone-500 font-light leading-relaxed">
+        C'est pourquoi notre rédaction a choisi de se spécialiser dans l'élément central de la cuisine moderne : <strong>la machine espresso de spécialité</strong>. Nous appliquons la même exigence de design et de qualité que nous avions pour la décoration pour vous aider à choisir l'équipement qui transformera votre quotidien.
+      </p>
+    </div>
+    <div className="bg-stone-50 p-8 rounded-sm border border-stone-100">
+      <h4 className="font-serif text-lg mb-4 italic">Notre Indépendance</h4>
+      <p className="text-xs text-stone-400 leading-relaxed italic">
+        Nous ne recevons aucun produit gratuitement. Nos recommandations sont basées sur l'analyse croisée de données techniques, de retours d'utilisateurs et de la stabilité des prix du marché premium.
+      </p>
+    </div>
+  </div>
+</section>
     </div>
   );
 }
