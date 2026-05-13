@@ -1,11 +1,10 @@
-import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import { Clock, ArrowLeft } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 export const revalidate = 3600;
 
-// 1. SEO DYNAMIQUE : Harmonisation avec Idées Casa
+// 1. SEO DYNAMIQUE
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const { data: article } = await supabase
@@ -26,7 +25,6 @@ export async function generateMetadata({ params }) {
 export default async function ArticlePage({ params }) {
   const { slug } = await params; 
   
-  // Récupération de l'article
   const { data: article, error } = await supabase
     .from('articles')
     .select('*')
@@ -41,12 +39,10 @@ export default async function ArticlePage({ params }) {
     );
   }
 
-  // Calcul du temps de lecture
   const readTime = Math.max(1, Math.ceil(article.content.split(/\s+/).length / 200));
 
   return (
     <main className="min-h-screen bg-[#fdfbf7] text-[#1c1917] pb-24 border-t-[12px] border-[#1c1917]">
-      {/* Barre de navigation interne */}
       <nav className="py-6 px-6 border-b border-stone-200 sticky top-0 bg-[#fdfbf7]/90 backdrop-blur-sm z-50">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-stone-500 hover:text-stone-900 transition-colors">
@@ -74,15 +70,27 @@ export default async function ArticlePage({ params }) {
           <div className="w-24 h-px bg-stone-300 mx-auto"></div>
         </header>
 
-        {/* Contenu de l'article avec style Lettrine et Titres */}
-        <div className="font-light leading-relaxed text-[18px] md:text-[20px] text-stone-800 space-y-8 
+        {/* RENDU HTML : C'est ici qu'on corrige l'affichage des balises */}
+        <div 
+          className="font-light leading-relaxed text-[18px] md:text-[20px] text-stone-800 space-y-6
           [&>p:first-of-type::first-letter]:float-left [&>p:first-of-type::first-letter]:text-7xl 
           [&>p:first-of-type::first-letter]:pr-3 [&>p:first-of-type::first-letter]:font-serif 
           [&>p:first-of-type::first-letter]:text-stone-900
-          [&>h2]:text-3xl [&>h2]:font-serif [&>h2]:mt-16 [&>h2]:text-stone-900 [&>h2]:uppercase [&>h2]:tracking-tight
-          [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2">
-          <ReactMarkdown>{article.content}</ReactMarkdown>
-        </div>
+          [&>h2]:text-3xl [&>h2]:font-serif [&>h2]:mt-12 [&>h2]:mb-4 [&>h2]:text-stone-900 [&>h2]:uppercase [&>h2]:tracking-tight
+          [&>p]:mb-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:mb-6"
+          dangerouslySetInnerHTML={{ __html: article.content }} 
+        />
 
         <footer className="mt-24 pt-12 border-t border-stone-200 text-center">
-          <p className="text-stone-400 text-sm mb-8
+          <p className="text-stone-400 text-sm mb-8 italic">
+            Analyse rédigée par l'équipe éditoriale d'Idées Casa. <br/>
+            Expertise indépendante garantie.
+          </p>
+          <Link href="/" className="inline-block px-10 py-4 border border-stone-900 text-[10px] uppercase font-bold tracking-widest hover:bg-stone-900 hover:text-white transition-all">
+            Consulter les guides d'achat
+          </Link>
+        </footer>
+      </article>
+    </main>
+  );
+}
