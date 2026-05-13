@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
               <div className="space-y-4">
                 <p className="text-[10px] uppercase tracking-widest font-bold text-stone-500">Légal</p>
                 <ul className="space-y-2 text-sm font-light text-stone-400">
-                  <li>© 2026 MUTHOS</li>
+                  <li>© 2026 IdeesCasa – Rédaction & Expertise Cuisine par l'équipe IdeesCasa. </li>
                   <li>Indépendance totale</li>
                 </ul>
               </div>
