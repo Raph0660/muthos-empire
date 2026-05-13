@@ -34,6 +34,10 @@ const nextConfig = {
       { protocol: 'https', hostname: '**.boulanger.com' },
       { protocol: 'https', hostname: '**.coffee-webstore.com' },
       { protocol: 'https', hostname: '**.maxicoffee.com' },
+      { protocol: 'https', hostname: 'media1.coffee-webstore.com' },
+      { protocol: 'https', hostname: 'media2.coffee-webstore.com' },
+      { protocol: 'https', hostname: 'media3.coffee-webstore.com' },
+      { protocol: 'https', hostname: 'm.media-amazon.com' },
       { protocol: 'https', hostname: '**.scene7.com' }
     ],
   },
