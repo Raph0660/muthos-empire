@@ -6,13 +6,13 @@ export default function ProductCard({ product }) {
   const hasPromo = product.price_catalog && product.price_catalog > product.price_current;
   const reduction = hasPromo ? Math.round(((product.price_catalog - product.price_current) / product.price_catalog) * 100) : 0;
   
-  // Image par défaut si l'URL est cassée ou vide
   const fallbackImage = "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop";
 
   return (
     <article className="group">
       <a href={`/machines/${product.slug}`} className="block">
-        {/* CONTAINER IMAGE - Restauré avec les paramètres d'origine */}
+        
+        {/* BLOC IMAGE : RESTAURÉ À L'IDENTIQUE DE TA VERSION INITIALE */}
         <div className="aspect-[4/5] bg-white border border-stone-100 mb-8 overflow-hidden relative flex items-center justify-center p-12 transition-all duration-700 group-hover:shadow-2xl group-hover:shadow-stone-200">
           
           {hasPromo && reduction > 0 && (
@@ -32,20 +32,17 @@ export default function ProductCard({ product }) {
           />
         </div>
 
-        {/* BLOC TEXTE - Avec tes améliorations de taille */}
+        {/* BLOC TEXTE : AJUSTÉ POUR LA MARQUE ET LE MODÈLE UNIQUEMENT */}
         <div className="space-y-1">
-          {/* Marque : Taille boostée (12px) et extra-bold */}
           <p className="text-[12px] uppercase tracking-[0.2em] font-extrabold text-amber-800/80">
             {product.brand}
           </p>
           
-          {/* Modèle : Logique "Machine" pour les noms courts (Smeg, etc.) */}
           <h3 className="font-serif text-xl md:text-2xl uppercase tracking-tighter text-[#1a1a1a] leading-tight mb-2">
             {product.model.length < 12 ? `Machine ${product.model}` : product.model}
           </h3>
           
-          {/* Description avec hauteur mini pour l'alignement parfait des cartes */}
-          <p className="text-stone-400 font-light text-xs line-clamp-2 italic mb-4 min-h-[32px]">
+          <p className="text-stone-400 font-light text-sm line-clamp-2 italic mb-4 min-h-[32px]">
             {product.description}
           </p>
           
