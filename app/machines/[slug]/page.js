@@ -15,11 +15,11 @@ export async function generateMetadata({ params }) {
     .eq('slug', slug)
     .single();
 
-  if (!product) return { title: "Machine introuvable | MUTHOS" };
+  if (!product) return { title: "Machine introuvable | Idées Casa" };
 
   return {
     title: `${product.brand} ${product.model} : Prix, Avis et Test 2026`,
-    description: `Découvrez la ${product.brand} ${product.model}. Actuellement au meilleur prix à ${product.price_current}€. Analyse technique indépendante MUTHOS.`,
+    description: `Découvrez la ${product.brand} ${product.model}. Actuellement au meilleur prix à ${product.price_current}€. Analyse technique indépendante d'Idées Casa.`,
   };
 }
 
