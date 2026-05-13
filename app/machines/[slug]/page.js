@@ -1,26 +1,65 @@
 import { supabase } from '@/lib/supabase';
+import { notFound } from 'next/navigation';
 import AffiliateButton from '@/components/AffiliateButton';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Gauge, Coffee, Zap } from 'lucide-react';
 import Link from 'next/link';
+
+export const revalidate = 86400;
+
+export async function generateStaticParams() {
+  const { data: products } = await supabase.from('products').select('slug').limit(20);
+  return products?.map((p) => ({ slug: p.slug })) || [];
+}
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const { data: product } = await supabase.from('products').select('*').eq('slug', slug).single();
+  if (!product) return { title: "Machine introuvable" };
+  return { title: `${product.brand} ${product.model} | Idées Casa` };
+}
 
 export default async function ProductPage({ params }) {
   const { slug } = await params;
   const { data: product } = await supabase.from('products').select('*').eq('slug', slug).single();
-  if (!product) return null;
+  if (!product) notFound();
+
+  const hasPromo = product.price_catalog && product.price_catalog > product.price_current;
+  const merchantName = product.source_url?.includes('boulanger') ? "Boulanger" : "notre partenaire";
 
   return (
-    <main className="min-h-screen bg-[#fdfbf7] p-6">
-      <Link href="/" className="flex items-center gap-2 text-xs mb-8 uppercase tracking-widest"><ArrowLeft size={14}/> Retour</Link>
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 text-left">
-        <div className="bg-white p-8 border border-stone-100 flex items-center justify-center aspect-square">
-          <img src={product.image_url} alt={product.model} className="max-w-full max-h-full object-contain" />
+    <main className="min-h-screen bg-[#fdfbf7] pb-24 text-left">
+      <nav className="py-6 px-6 border-b border-stone-200">
+        <div className="max-w-6xl mx-auto">
+          <Link href="/" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold text-stone-500">
+            <ArrowLeft className="w-3 h-3" /> Retour
+          </Link>
         </div>
-        <div>
-          <p className="text-amber-800 font-bold uppercase tracking-[0.3em] text-sm mb-2">{product.brand}</p>
-          <h1 className="text-4xl md:text-6xl font-serif mb-6 uppercase italic">{product.model}</h1>
-          <p className="text-5xl text-red-600 font-serif mb-8">{product.price_current}€</p>
-          <div className="text-stone-500 mb-10 italic leading-relaxed">{product.description}</div>
-          <AffiliateButton url={product.source_url} merchantName="le marchand" price={product.price_current} />
+      </nav>
+
+      <div className="max-w-6xl mx-auto px-6 mt-12 grid grid-cols-1 lg:grid-cols-2 gap-16">
+        {/* IMAGE SIMPLE SANS FILTRE */}
+        <div className="bg-white border border-stone-100 p-8 flex items-center justify-center aspect-square shadow-sm">
+          <img 
+            src={product.image_url} 
+            alt={product.model} 
+            className="max-h-full max-w-full object-contain"
+            style={{ display: 'block' }}
+          />
+        </div>
+
+        <div className="pt-4">
+          <p className="text-[14px] uppercase tracking-[0.3em] font-extrabold text-amber-800 mb-4">{product.brand}</p>
+          <h1 className="font-serif text-4xl md:text-6xl uppercase mb-8 italic leading-none">
+            {product.model.length < 12 ? `Machine ${product.model}` : product.model}
+          </h1>
+          <div className="flex items-baseline gap-4 mb-10 border-b border-stone-200 pb-10 font-serif">
+            <p className="text-6xl text-red-600">{product.price_current}€</p>
+            {hasPromo && <p className="text-2xl text-stone-300 line-through">{product.price_catalog}€</p>}
+          </div>
+          <div className="mb-12 text-stone-600 font-light text-xl italic leading-relaxed">
+            {product.description}
+          </div>
+          <AffiliateButton url={product.source_url} merchantName={merchantName} price={product.price_current} />
         </div>
       </div>
     </main>
