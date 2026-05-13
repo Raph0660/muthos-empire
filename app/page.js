@@ -90,6 +90,16 @@ export default async function HomePage() {
              Les offres sont en cours d'actualisation...
            </div>
         )}
+{/* Bloc Confiance / E-E-A-T */}
+<section className="max-w-4xl mx-auto px-6 py-20 border-t border-stone-100 text-center">
+  <h2 className="font-serif text-2xl mb-6 text-[#1a1a1a]">Notre Engagement</h2>
+  <p className="text-stone-500 font-light leading-relaxed italic">
+    "Chez <strong>IdeesCasa</strong>, nous pensons que l'équipement de la maison doit allier durabilité et performance. 
+    Nos analyses de machines espresso ne sont pas de simples fiches techniques : nous agrégeons les retours d'experts et 
+    les données du marché pour vous offrir un comparatif impartial. Notre mission est de rendre le café de spécialité 
+    accessible à tous les passionnés, au prix le plus juste."
+  </p>
+</section>
       </section>
     </div>
   );
