@@ -16,16 +16,16 @@ export default async function HomePage() {
 
   return (
     <div className="bg-[#fdfbf7]">
-      {/* 1. HERO SECTION */}
+{/* 1. HERO SECTION - Le Pont Sémantique */}
       <section className="pt-32 pb-20 px-6 text-center border-b border-stone-200">
         <span className="text-[10px] uppercase tracking-[0.4em] mb-8 block opacity-50 font-bold text-stone-800">
-          Le Guide Indépendant IdeesCasa
+          L'Héritage de l'Excellence Domestique — IdeesCasa
         </span>
         <h1 className="font-serif text-5xl md:text-7xl mb-6 tracking-tighter leading-tight text-[#1a1a1a]">
-          L'Équipement Premium <br className="hidden md:block" /> au Meilleur Prix
+          L'Art de Vivre <br className="hidden md:block" /> au Meilleur Prix
         </h1>
         <p className="text-stone-500 max-w-2xl mx-auto font-light italic text-lg leading-relaxed">
-          Votre comparateur d'excellence pour la maison. Nous traquons quotidiennement le marché pour vous dénicher les <strong>machines espresso haute performance</strong> aux tarifs les plus avantageux.
+          Héritier d'une passion pour l'excellence domestique, <strong>IdeesCasa</strong> devient votre curateur spécialisé. Des conseils d'aménagement au choix du matériel de pointe, nous traquons quotidiennement les meilleures opportunités sur les <strong>machines espresso premium</strong> pour sublimer votre intérieur.
         </p>
       </section>
 
