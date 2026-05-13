@@ -2,7 +2,7 @@ import { supabase } from '../lib/supabase';
 
 export default async function sitemap() {
   // L'URL de ton site (mise à jour avec muthos-empire.com)
-  const baseUrl = 'https://www.muthos-empire.com';
+  const baseUrl = 'https://www.ideescasa.fr';
 
   // 1. Récupération dynamique des produits (Les machines)
   let productRoutes = [];
