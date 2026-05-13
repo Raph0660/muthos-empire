@@ -95,11 +95,16 @@ export default async function ProductPage({ params }) {
         </div>
 
         {/* COLONNE DROITE : ARGUMENTAIRE & PRIX */}
-        <div className="flex flex-col justify-top pt-4">
-          <p className="text-[12px] uppercase tracking-[0.3em] font-bold text-amber-800 mb-4">{product.brand}</p>
-          <h1 className="font-serif text-4xl md:text-6xl uppercase tracking-tighter text-stone-900 mb-8 leading-none italic">
-            {product.model}
-          </h1>
+<div className="flex flex-col justify-top pt-4">
+  {/* Marque : On augmente à 14px et font-extrabold */}
+  <p className="text-[14px] uppercase tracking-[0.3em] font-extrabold text-amber-800 mb-4">
+    {product.brand}
+  </p>
+  
+  {/* Modèle : Même logique d'humanisation pour les refs techniques */}
+  <h1 className="font-serif text-4xl md:text-6xl uppercase tracking-tighter text-stone-900 mb-8 leading-none italic">
+    {product.model.length < 12 ? `Machine ${product.model}` : product.model}
+  </h1>
           
           <div className="flex items-baseline gap-4 mb-10 border-b border-stone-200 pb-10">
             <p className="font-serif text-6xl text-red-600 leading-none">
