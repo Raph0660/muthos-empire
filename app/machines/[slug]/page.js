@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export const revalidate = 86400; // ISR 24h
 
-// 1. GÉNÉRATION STATIQUE : Prépare les pages au build pour une vitesse maximale
+// 1. GÉNÉRATION STATIQUE : Prépare les pages au build
 export async function generateStaticParams() {
   const { data: products } = await supabase.from('products').select('slug').limit(20);
   return products?.map((p) => ({ slug: p.slug })) || [];
@@ -52,18 +52,26 @@ export default async function ProductPage({ params }) {
 
       <div className="max-w-6xl mx-auto px-6 mt-12 grid grid-cols-1 lg:grid-cols-2 gap-16">
         
-        {/* COLONNE GAUCHE : VISUEL & SPECS */}
+        {/* COLONNE GAUCHE : VISUEL (CORRIGÉ) & SPECS */}
         <div className="space-y-8">
-          <div className="aspect-square bg-white border border-stone-200 p-12 flex items-center justify-center relative shadow-sm">
+          <div className="bg-white border border-stone-100 p-8 md:p-12 aspect-square flex items-center justify-center relative shadow-sm">
             {hasPromo && (
-              <div className="absolute top-6 left-6 bg-red-600 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest z-10">
+              <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest z-20">
                 -{reduction}%
               </div>
             )}
+            
             {product.image_url ? (
-              <img src={product.image_url} alt={product.model} className="max-h-full object-contain mix-blend-multiply" />
+              <img 
+                src={product.image_url} 
+                alt={product.model} 
+                className="max-h-full max-w-full object-contain transition-opacity duration-500"
+              />
             ) : (
-              <div className="text-stone-300 italic">Image en cours de traitement</div>
+              <div className="flex flex-col items-center gap-4 text-stone-200">
+                <Coffee className="w-16 h-16 stroke-[1px]" />
+                <span className="text-[10px] uppercase tracking-widest font-medium">Visuel indisponible</span>
+              </div>
             )}
           </div>
 
