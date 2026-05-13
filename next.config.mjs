@@ -33,11 +33,14 @@ const nextConfig = {
       }
     ];
   },
-  images: {
+images: {
     remotePatterns: [
       { protocol: 'https', hostname: '**.boulanger.com' },
       { protocol: 'https', hostname: '**.coffee-webstore.com' },
+      { protocol: 'https', hostname: '**.maxicoffee.com' }, 
       { protocol: 'https', hostname: '**.scene7.com' },
+    ],
+  },
     ],
   },
 };
